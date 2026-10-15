@@ -1,34 +1,34 @@
 name: Bot Météo Bluesky
 
-# Quand le bot se lance
+# When the bot runs
 on:
   schedule:
-    # ⚠️ Les heures sont en UTC. Paris = UTC+2 (été) / UTC+1 (hiver)
-    # 06:00 UTC = 08:00 Paris (été)   |   16:00 UTC = 18:00 Paris (été)
+    # ⚠️ Times are in UTC. Paris = UTC+2 (summer) / UTC+1 (winter)
+    # 06:00 UTC = 08:00 Paris (summer)   |   16:00 UTC = 18:00 Paris (summer)
     - cron: '0 6 * * *'
     - cron: '0 16 * * *'
-  # Permet aussi de lancer le bot à la main depuis GitHub (bouton "Run workflow")
+  # Also allows running the bot manually from GitHub ("Run workflow" button)
   workflow_dispatch:
 
 jobs:
   poster-meteo:
     runs-on: ubuntu-latest
     steps:
-      # 1. Récupère ton code
+      # 1. Check out the code
       - name: Récupérer le code
         uses: actions/checkout@v4
 
-      # 2. Installe Node.js
+      # 2. Install Node.js
       - name: Installer Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 3. Installe les librairies
+      # 3. Install the libraries
       - name: Installer les dépendances
         run: npm install
 
-      # 4. Lance le bot (les secrets viennent des GitHub Secrets)
+      # 4. Run the bot (secrets come from GitHub Secrets)
       - name: Publier la météo
         run: node bot.js
         env:
